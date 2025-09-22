@@ -4,17 +4,14 @@
     "codeowners": ["@benjaminearlevans"],
     "config_flow": true,
     "dependencies": ["http", "webhook"],
-    "documentation": "https://github.com/benjaminearlevans/ha-oura-ring",
-    "homekit": {},
+    "documentation": "https://www.home-assistant.io/integrations/oura_full",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/benjaminearlevans/ha-oura-ring/issues",
     "loggers": ["oura_full"],
-    "quality_scale": "platinum",
+    "quality_scale": "bronze",
     "requirements": ["aiohttp>=3.8.1", "python-dateutil>=2.8.2"],
-    "ssdp": [],
     "version": "1.0.0",
-    "zeroconf": [],
     "integration_type": "device",
     "after_dependencies": ["mqtt", "influxdb", "recorder"],
     "single_config_entry": false
-  }
+}

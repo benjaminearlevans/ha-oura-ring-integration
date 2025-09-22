@@ -74,7 +74,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     api_client = OuraApiClient(
         session=session,
         token=entry.data[CONF_TOKEN],
-        auth_type=entry.data.get("auth_type", "pat"),
+        auth_type="pat",  # Always use PAT since OAuth2 was removed
         base_url=entry.options.get("api_base_url"),
     )
     

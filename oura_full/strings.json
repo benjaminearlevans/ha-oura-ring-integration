@@ -3,16 +3,6 @@
       "flow_title": "Oura Ring Integration",
       "step": {
         "user": {
-          "title": "Choose Authentication Method",
-          "description": "Select how you want to connect to your Oura Ring",
-          "data": {
-            "auth_type": "Authentication Type"
-          },
-          "data_description": {
-            "auth_type": "Personal Access Token is simpler, OAuth2 is more secure and future-proof"
-          }
-        },
-        "pat": {
           "title": "Personal Access Token",
           "description": "Enter your Oura personal access token. You can get one from {token_url}",
           "data": {
@@ -22,14 +12,6 @@
           "data_description": {
             "token": "Your Oura API personal access token",
             "name": "Name for this Oura Ring device in Home Assistant"
-          }
-        },
-        "oauth2_init": {
-          "title": "OAuth2 Configuration",
-          "description": "Enter your OAuth2 application credentials",
-          "data": {
-            "client_id": "Client ID",
-            "client_secret": "Client Secret"
           }
         },
         "features": {
@@ -266,12 +248,6 @@
       }
     },
     "selector": {
-      "auth_type": {
-        "options": {
-          "pat": "Personal Access Token",
-          "oauth2": "OAuth2 (Recommended)"
-        }
-      },
       "insight_type": {
         "options": {
           "sleep_optimization": "Sleep Optimization",
