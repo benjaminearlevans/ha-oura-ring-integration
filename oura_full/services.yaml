@@ -1,0 +1,362 @@
+# Oura ring Integration Services
+
+refresh_data:
+  name: Refresh Oura Data
+  description: Force refresh of all Oura data from the API
+  fields:
+    include_historical:
+      name: Include Historical Data
+      description: Fetch historical data for the past 7 days
+      required: false
+      default: false
+      selector:
+        boolean:
+    data_types:
+      name: Data Types
+      description: Specific data types to refresh (leave empty for all)
+      required: false
+      selector:
+        select:
+          multiple: true
+          options:
+            - label: Sleep
+              value: sleep
+            - label: Readiness
+              value: readiness
+            - label: Activity
+              value: activity
+            - label: Heart Rate
+              value: heart_rate
+            - label: Stress
+              value: stress
+            - label: Workouts
+              value: workouts
+            - label: SpO2
+              value: spo2
+
+get_wellness_insight:
+  name: Get Wellness Insight
+  description: Generate AI-powered wellness insight based on your Oura data
+  fields:
+    insight_type:
+      name: Insight Type
+      description: Type of insight to generate
+      required: true
+      selector:
+        select:
+          options:
+            - label: Sleep Optimization
+              value: sleep_optimization
+            - label: Recovery Plan
+              value: recovery_plan
+            - label: Activity Recommendation
+              value: activity_recommendation
+            - label: Stress Management
+              value: stress_management
+            - label: Circadian Alignment
+              value: circadian_alignment
+    context_days:
+      name: Context Days
+      description: Number of days of historical data to consider
+      required: false
+      default: 7
+      selector:
+        number:
+          min: 1
+          max: 30
+          step: 1
+          mode: slider
+    personalized:
+      name: Personalized
+      description: Include personalized recommendations based on your patterns
+      required: false
+      default: true
+      selector:
+        boolean:
+
+set_wellness_mode:
+  name: Set Wellness Mode
+  description: Manually override the automatic wellness phase detection
+  fields:
+    mode:
+      name: Wellness Mode
+      description: The wellness mode to set
+      required: true
+      selector:
+        select:
+          options:
+            - label: Recovery
+              value: recovery
+            - label: Maintenance
+              value: maintenance
+            - label: Challenge
+              value: challenge
+            - label: Peak Performance
+              value: peak
+            - label: Custom
+              value: custom
+    duration_hours:
+      name: Duration (hours)
+      description: How long to maintain this mode override
+      required: false
+      default: 24
+      selector:
+        number:
+          min: 1
+          max: 168
+          step: 1
+          unit_of_measurement: hours
+          mode: slider
+    custom_settings:
+      name: Custom Settings
+      description: Custom settings for the wellness mode (JSON format)
+      required: false
+      selector:
+        text:
+          multiline: true
+
+export_wellness_data:
+  name: Export Wellness Data
+  description: Export your Oura data for external analysis
+  fields:
+    format:
+      name: Export Format
+      description: Format for the exported data
+      required: true
+      selector:
+        select:
+          options:
+            - label: CSV
+              value: csv
+            - label: JSON
+              value: json
+            - label: InfluxDB
+              value: influxdb
+    date_range:
+      name: Date Range (days)
+      description: Number of days of data to export
+      required: false
+      default: 30
+      selector:
+        number:
+          min: 1
+          max: 365
+          step: 1
+          mode: box
+    data_types:
+      name: Data Types
+      description: Types of data to include in export
+      required: false
+      selector:
+        select:
+          multiple: true
+          options:
+            - label: Sleep
+              value: sleep
+            - label: Readiness
+              value: readiness
+            - label: Activity
+              value: activity
+            - label: Heart Rate
+              value: heart_rate
+            - label: All
+              value: all
+    destination:
+      name: Destination Path
+      description: Where to save the exported file (leave empty for default)
+      required: false
+      selector:
+        text:
+
+trigger_recovery_protocol:
+  name: Trigger Recovery Protocol
+  description: Activate recovery-focused automations based on your current state
+  fields:
+    protocol_level:
+      name: Protocol Level
+      description: Intensity of the recovery protocol
+      required: true
+      selector:
+        select:
+          options:
+            - label: Light Recovery
+              value: light
+            - label: Moderate Recovery
+              value: moderate
+            - label: Intensive Recovery
+              value: intensive
+    components:
+      name: Recovery Components
+      description: Which recovery components to activate
+      required: false
+      default: ["lighting", "temperature"]
+      selector:
+        select:
+          multiple: true
+          options:
+            - label: Adaptive Lighting
+              value: lighting
+            - label: Temperature Control
+              value: temperature
+            - label: Notifications
+              value: notifications
+            - label: Calendar Blocking
+              value: calendar_blocking
+            - label: Meditation Prompts
+              value: meditation_prompts
+            - label: Music/Soundscapes
+              value: music
+            - label: Device Restrictions
+              value: device_restrictions
+    duration_hours:
+      name: Duration (hours)
+      description: How long to maintain recovery protocol
+      required: false
+      default: 8
+      selector:
+        number:
+          min: 1
+          max: 48
+          step: 1
+          unit_of_measurement: hours
+          mode: slider
+
+create_automation:
+  name: Create Oura Automation
+  description: Create a new automation based on Oura data
+  fields:
+    automation_type:
+      name: Automation Type
+      description: Type of automation to create
+      required: true
+      selector:
+        select:
+          options:
+            - label: Sleep-based Scene
+              value: sleep_scene
+            - label: Readiness Alert
+              value: readiness_alert
+            - label: Activity Reminder
+              value: activity_reminder
+            - label: Circadian Lighting
+              value: circadian_lighting
+            - label: Recovery Mode
+              value: recovery_mode
+    trigger_entity:
+      name: Trigger Entity
+      description: Oura entity to use as trigger
+      required: true
+      selector:
+        entity:
+          integration: oura_full
+    trigger_threshold:
+      name: Trigger Threshold
+      description: Threshold value for the trigger
+      required: false
+      selector:
+        number:
+          min: 0
+          max: 100
+          step: 1
+    action_type:
+      name: Action Type
+      description: What action to perform
+      required: true
+      selector:
+        select:
+          options:
+            - label: Turn on scene
+              value: scene
+            - label: Send notification
+              value: notification
+            - label: Control lights
+              value: lights
+            - label: Control climate
+              value: climate
+            - label: Run script
+              value: script
+    action_target:
+      name: Action Target
+      description: Target entity or device for the action
+      required: false
+      selector:
+        entity:
+
+generate_report:
+  name: Generate Wellness Report
+  description: Generate a comprehensive wellness report
+  fields:
+    report_type:
+      name: Report Type
+      description: Type of report to generate
+      required: true
+      selector:
+        select:
+          options:
+            - label: Daily Summary
+              value: daily
+            - label: Weekly Overview
+              value: weekly
+            - label: Monthly Analysis
+              value: monthly
+            - label: Custom Period
+              value: custom
+    include_ai_insights:
+      name: Include AI Insights
+      description: Include AI-generated insights in the report
+      required: false
+      default: true
+      selector:
+        boolean:
+    include_charts:
+      name: Include Charts
+      description: Include visual charts in the report
+      required: false
+      default: true
+      selector:
+        boolean:
+    send_to:
+      name: Send To
+      description: Email address to send the report (optional)
+      required: false
+      selector:
+        text:
+
+sync_with_calendar:
+  name: Sync with Calendar
+  description: Sync Oura insights with your calendar
+  fields:
+    calendar_entity:
+      name: Calendar
+      description: Calendar to sync with
+      required: true
+      selector:
+        entity:
+          domain: calendar
+    sync_type:
+      name: Sync Type
+      description: What to sync to calendar
+      required: true
+      selector:
+        select:
+          multiple: true
+          options:
+            - label: Optimal Bedtime
+              value: bedtime
+            - label: Recovery Periods
+              value: recovery
+            - label: Workout Windows
+              value: workouts
+            - label: High Energy Times
+              value: energy
+    days_ahead:
+      name: Days Ahead
+      description: How many days ahead to schedule
+      required: false
+      default: 7
+      selector:
+        number:
+          min: 1
+          max: 30
+          step: 1
+          mode: slider

@@ -1,0 +1,8 @@
+{
+  "name": "Oura Ring Integration",
+  "content_in_root": false,
+  "country": ["US", "CA", "GB", "DE", "FR", "NL", "SE", "NO", "DK", "FI", "AU", "NZ"],
+  "domains": ["sensor", "binary_sensor", "switch", "number", "button", "select"],
+  "iot_class": "Cloud Polling",
+  "homeassistant": "2024.1.0"
+}
